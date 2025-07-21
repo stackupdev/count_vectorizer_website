@@ -156,63 +156,58 @@ textarea:focus {
 
 .main-btn {
     width: 100%;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
+}
+
+.btn-analyze {
+    flex: 1;
     border: none;
-    border-radius: 16px;
     padding: 18px 24px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     background: linear-gradient(135deg, #7b61ff 0%, #4f8cff 100%);
     color: #ffffff;
-    box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
+    border-radius: 8px;
 }
 
-.btn-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: all 0.3s ease;
-}
-
-.main-btn.has-reset .btn-left {
-    left: 40%;
-    transform: translateX(-50%);
+.main-btn.has-reset .btn-analyze {
+    border-radius: 8px 0 0 8px;
+    flex: 0.75;
 }
 
 .btn-reset {
-    display: flex;
+    flex: 0.25;
+    border: none;
+    padding: 18px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: none;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%) translateX(20px);
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.15);
-    opacity: 0;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+    color: #ffffff;
+    border-radius: 0 8px 8px 0;
 }
 
-.btn-reset.show {
-    opacity: 1;
-    transform: translateY(-50%) translateX(0);
+.main-btn.has-reset .btn-reset {
+    display: flex;
 }
 
 .btn-reset:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff5252 0%, #ff7979 100%);
+    transform: scale(1.02);
 }
 
 .main-btn::before {

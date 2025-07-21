@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultDiv = document.getElementById('result');
     const resultContent = document.querySelector('.result-content');
     const mainBtn = document.getElementById('main-btn');
+    const btnAnalyze = document.getElementById('btn-analyze');
     const btnReset = document.getElementById('btn-reset');
     const mascot = document.getElementById('mascot');
     const mascotMouth = document.getElementById('mascot-mouth');
@@ -261,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 
                 // Show reset button after analysis
-                btnReset.classList.add('show');
                 mainBtn.classList.add('has-reset');
             }, 800);
             
@@ -273,5 +273,26 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             resultDiv.className = 'result show';
         }
+    });
+
+    // Reset button functionality
+    btnReset.addEventListener('click', function() {
+        // Clear input and results
+        messageInput.value = '';
+        resultDiv.className = 'result';
+        resultContent.innerHTML = '';
+        
+        // Reset button state
+        mainBtn.classList.remove('has-reset');
+        
+        // Reset mascot
+        mascotMouth.setAttribute('d', originalMouthPath);
+        mascot.style.transform = '';
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
+        // Focus back on textarea
+        messageInput.focus();
     });
 });
