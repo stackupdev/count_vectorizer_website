@@ -202,20 +202,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Reset functionality
     function resetAll() {
+        // Clear input and results
         messageInput.value = '';
         resultDiv.className = 'result';
-        resultContent.textContent = '';
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        resultContent.innerHTML = '';
         
-        // Hide reset button
-        btnReset.classList.remove('show');
+        // Reset button state
         mainBtn.classList.remove('has-reset');
         
-        // Reset mascot to normal state
-        mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
-        mascotMouth.setAttribute('d', originalMouthPath);
+        // Re-enable analyze button
+        btnAnalyze.disabled = false;
+        btnAnalyze.style.opacity = '1';
+        btnAnalyze.style.cursor = 'pointer';
         
-        // Focus back to textarea
+        // Reset mascot
+        mascotMouth.setAttribute('d', originalMouthPath);
+        mascot.style.transform = '';
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
+        // Focus back on textarea
         messageInput.focus();
     }
     
@@ -285,29 +292,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Reset button functionality
-    btnReset.addEventListener('click', function() {
-        // Clear input and results
-        messageInput.value = '';
-        resultDiv.className = 'result';
-        resultContent.innerHTML = '';
-        
-        // Reset button state
-        mainBtn.classList.remove('has-reset');
-        
-        // Re-enable analyze button
-        btnAnalyze.disabled = false;
-        btnAnalyze.style.opacity = '1';
-        btnAnalyze.style.cursor = 'pointer';
-        
-        // Reset mascot
-        mascotMouth.setAttribute('d', originalMouthPath);
-        mascot.style.transform = '';
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-        
-        // Focus back on textarea
-        messageInput.focus();
+    // Reset button functionality - use the consolidated resetAll function
+    btnReset.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        resetAll();
     });
 });
