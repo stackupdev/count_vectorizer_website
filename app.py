@@ -19,11 +19,12 @@ def index():
 def predict():
     data = request.json
     message = data.get('message', '')
+
     vect = vectorizer.transform([message])
     prediction = model.predict(vect)[0]
     proba = model.predict_proba(vect)[0]
     return jsonify({
-        'prediction': 'Spam' if prediction == 1 else 'Not Spam',
+        'prediction': 'Spam' if prediction == 'spam' else 'Not Spam',
         'probability': float(max(proba))
     })
 
