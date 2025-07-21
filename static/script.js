@@ -210,10 +210,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reset button state
         mainBtn.classList.remove('has-reset');
         
-        // Re-enable analyze button
+        // Re-enable analyze button completely
         btnAnalyze.disabled = false;
         btnAnalyze.style.opacity = '1';
         btnAnalyze.style.cursor = 'pointer';
+        btnAnalyze.style.pointerEvents = 'auto';
+        console.log('Reset completed - analyze button re-enabled');
         
         // Reset mascot
         mascotMouth.setAttribute('d', originalMouthPath);
@@ -238,10 +240,19 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         e.stopPropagation();
         
-        // Disable analyze button
+        // Prevent multiple clicks if already disabled
+        if (btnAnalyze.disabled) {
+            console.log('Button already disabled, ignoring click');
+            return;
+        }
+        
+        console.log('Analyze button clicked - starting analysis');
+        
+        // Disable analyze button immediately
         btnAnalyze.disabled = true;
         btnAnalyze.style.opacity = '0.6';
         btnAnalyze.style.cursor = 'not-allowed';
+        btnAnalyze.style.pointerEvents = 'none';
         
         // Clear previous results and animations
         ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
