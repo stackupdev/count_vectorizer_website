@@ -226,8 +226,10 @@ document.addEventListener('DOMContentLoaded', function () {
         resetAll();
     });
 
-    form.addEventListener('submit', async function (e) {
+    // Analyze button click handler
+    btnAnalyze.addEventListener('click', async function (e) {
         e.preventDefault();
+        e.stopPropagation();
         
         // Show loading state
         resultContent.textContent = '🔍 Analyzing message...';
