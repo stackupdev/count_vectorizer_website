@@ -215,7 +215,12 @@ document.addEventListener('DOMContentLoaded', function () {
         btnAnalyze.style.opacity = '1';
         btnAnalyze.style.cursor = 'pointer';
         btnAnalyze.style.pointerEvents = 'auto';
-        console.log('Reset completed - analyze button re-enabled');
+        
+        // Re-enable message input
+        messageInput.disabled = false;
+        messageInput.style.opacity = '1';
+        messageInput.style.cursor = 'text';
+        console.log('Reset completed - analyze button and message input re-enabled');
         
         // Reset mascot completely
         mascotMouth.setAttribute('d', originalMouthPath);
@@ -271,11 +276,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         
-        // Disable analyze button immediately
+        // Disable analyze button and message input immediately
         btnAnalyze.disabled = true;
         btnAnalyze.style.opacity = '0.6';
         btnAnalyze.style.cursor = 'not-allowed';
         btnAnalyze.style.pointerEvents = 'none';
+        
+        // Make message box non-editable during analysis
+        messageInput.disabled = true;
+        messageInput.style.opacity = '0.7';
+        messageInput.style.cursor = 'not-allowed';
         
         // Clear previous results and animations
         ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
