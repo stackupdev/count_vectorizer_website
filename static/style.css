@@ -167,7 +167,7 @@ textarea:focus {
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background: linear-gradient(135deg, #7b61ff 0%, #4f8cff 100%);
     color: #ffffff;
     box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
@@ -177,26 +177,37 @@ textarea:focus {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+}
+
+.main-btn.has-reset .btn-left {
+    left: 40%;
+    transform: translateX(-50%);
 }
 
 .btn-reset {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
     width: 40px;
     height: 40px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.15);
     opacity: 0;
-    transform: translateX(20px);
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .btn-reset.show {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(-50%) translateX(0);
 }
 
 .btn-reset:hover {

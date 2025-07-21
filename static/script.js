@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Hide reset button
         btnReset.classList.remove('show');
+        mainBtn.classList.remove('has-reset');
         
         // Reset mascot to normal state
         mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
@@ -261,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // Show reset button after analysis
                 btnReset.classList.add('show');
+                mainBtn.classList.add('has-reset');
             }, 800);
             
         } catch (err) {
