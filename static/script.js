@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         
-        // Create matrix rain
-        for (let i = 0; i < 50; i++) {
+        // Create matrix rain (make it more prominent)
+        for (let i = 0; i < 120; i++) {
             matrixChars.push({
                 x: Math.random() * confettiCanvas.width,
-                y: -20,
+                y: -40,
                 char: String.fromCharCode(0x30A0 + Math.random() * 96),
-                speed: Math.random() * 3 + 2,
-                alpha: Math.random() * 0.8 + 0.2
+                speed: Math.random() * 3.5 + 2.5,
+                alpha: Math.random() * 0.7 + 0.6
             });
         }
         
@@ -56,15 +56,18 @@ document.addEventListener('DOMContentLoaded', function () {
         function draw() {
             ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
             
-            // Draw matrix rain
-            ctx.fillStyle = '#00ff41';
-            ctx.font = '14px monospace';
+            // Draw matrix rain (larger, brighter, more)
+            ctx.fillStyle = '#39ff14';
+            ctx.font = '22px monospace';
             matrixChars.forEach(char => {
                 ctx.globalAlpha = char.alpha;
+                ctx.shadowColor = '#39ff14';
+                ctx.shadowBlur = 14;
                 ctx.fillText(char.char, char.x, char.y);
+                ctx.shadowBlur = 0;
                 char.y += char.speed;
                 if (char.y > confettiCanvas.height) {
-                    char.y = -20;
+                    char.y = -40;
                     char.x = Math.random() * confettiCanvas.width;
                 }
             });
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             
             frame++;
-            if (frame < 120) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 180) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
