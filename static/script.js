@@ -33,9 +33,26 @@ document.addEventListener('DOMContentLoaded', function () {
         draw();
     }
 
+    function junkBurst() {
+        const colors = ['#a9a9a9', '#808080', '#696969', '#778899', '#2f4f4f'];
+        const junk = [];
+        for (let i = 0; i < 50; i++) {
+            junk.push({ x: confettiCanvas.width / 2, y: confettiCanvas.height / 2 - 80, w: Math.random() * 8 + 5, h: Math.random() * 8 + 5, color: colors[Math.floor(Math.random() * colors.length)], angle: Math.random() * 2 * Math.PI, speed: Math.random() * 4 + 3, rotation: Math.random() * 2 * Math.PI });
+        }
+        let frame = 0;
+        function draw() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            junk.forEach(j => { j.x += Math.cos(j.angle) * j.speed; j.y += Math.sin(j.angle) * j.speed + frame * 0.08; j.rotation += 0.1; ctx.save(); ctx.translate(j.x, j.y); ctx.rotate(j.rotation); ctx.fillStyle = j.color; ctx.fillRect(-j.w / 2, -j.h / 2, j.w, j.h); ctx.restore(); });
+            frame++;
+            if (frame < 80) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+        draw();
+    }
+
     function triggerSpamAnimation() {
         mascot.style.animation = 'mascot-shake 0.5s linear';
         mascotMouth.setAttribute('d', frownMouthPath);
+        junkBurst();
         setTimeout(() => {
             mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
             mascotMouth.setAttribute('d', originalMouthPath);
