@@ -133,22 +133,43 @@ textarea:focus {
     background: rgba(255, 255, 255, 0.12);
 }
 
-button {
-    background: linear-gradient(135deg, #7b61ff 0%, #4f8cff 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 16px;
-    padding: 18px 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
-    position: relative;
-    overflow: hidden;
+.button-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
 }
 
-button::before {
+.analyze-btn, .reset-btn {
+    flex: 1;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.analyze-btn {
+    background: linear-gradient(135deg, #7b61ff 0%, #4f8cff 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
+}
+
+.reset-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.analyze-btn::before, .reset-btn::before {
     content: '';
     position: absolute;
     top: 0;
@@ -159,40 +180,105 @@ button::before {
     transition: left 0.5s;
 }
 
-button:hover::before {
+.analyze-btn:hover::before, .reset-btn:hover::before {
     left: 100%;
 }
 
-button:hover {
+.analyze-btn:hover {
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 8px 30px rgba(123, 97, 255, 0.6), 0 0 0 1px rgba(123, 97, 255, 0.5);
 }
 
-button:active {
+.reset-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
+}
+
+.analyze-btn:active, .reset-btn:active {
     transform: translateY(0) scale(0.98);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+.btn-text {
+    font-weight: 600;
 }
 
 .result {
     margin-top: 32px;
-    font-size: 1.3rem;
+    min-height: 80px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-content {
+    padding: 24px;
+    font-size: 1.2rem;
     font-weight: 600;
-    min-height: 40px;
-    padding: 16px;
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
 .result.spam {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 59, 59, 0.08));
+    border: 2px solid rgba(255, 107, 107, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     color: #ff6b6b;
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+}
+
+.result.spam::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ff6b6b, #ff3b3b, #ff6b6b);
+    background-size: 200% 100%;
+    animation: danger-pulse 2s linear infinite;
 }
 
 .result.not-spam {
+    background: linear-gradient(135deg, rgba(81, 207, 102, 0.15), rgba(34, 197, 94, 0.08));
+    border: 2px solid rgba(81, 207, 102, 0.4);
+    box-shadow: 0 8px 32px rgba(81, 207, 102, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     color: #51cf66;
-    background: rgba(81, 207, 102, 0.1);
-    border: 1px solid rgba(81, 207, 102, 0.3);
-    box-shadow: 0 0 20px rgba(81, 207, 102, 0.2);
+}
+
+.result.not-spam::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #51cf66, #22c55e, #51cf66);
+    background-size: 200% 100%;
+    animation: safe-pulse 2s linear infinite;
+}
+
+@keyframes danger-pulse {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes safe-pulse {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }

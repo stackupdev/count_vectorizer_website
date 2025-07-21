@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('spam-form');
     const messageInput = document.getElementById('message');
     const resultDiv = document.getElementById('result');
+    const resultContent = document.querySelector('.result-content');
+    const resetBtn = document.getElementById('reset-btn');
     const mascot = document.getElementById('mascot');
     const mascotMouth = document.getElementById('mascot-mouth');
     const confettiCanvas = document.getElementById('confetti-canvas');
@@ -17,34 +19,160 @@ document.addEventListener('DOMContentLoaded', function () {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    function confettiBurst() {
-        const colors = ['#7b61ff', '#4f8cff', '#ffb347', '#ff7f7f', '#7fffd4', '#ffe066', '#f6e6ff'];
-        const confetti = [];
-        for (let i = 0; i < 80; i++) {
-            confetti.push({ x: confettiCanvas.width / 2, y: confettiCanvas.height / 2 - 80, r: Math.random() * 7 + 4, color: colors[Math.floor(Math.random() * colors.length)], angle: Math.random() * 2 * Math.PI, speed: Math.random() * 5 + 2 });
+    function digitalShieldAnimation() {
+        const centerX = confettiCanvas.width / 2;
+        const centerY = confettiCanvas.height / 2 - 50;
+        const shieldParticles = [];
+        const matrixChars = [];
+        
+        // Create shield particles
+        for (let i = 0; i < 60; i++) {
+            const angle = (i / 60) * Math.PI * 2;
+            const radius = 80 + Math.random() * 40;
+            shieldParticles.push({
+                x: centerX + Math.cos(angle) * radius,
+                y: centerY + Math.sin(angle) * radius,
+                targetX: centerX + Math.cos(angle) * 60,
+                targetY: centerY + Math.sin(angle) * 60,
+                size: Math.random() * 4 + 2,
+                alpha: 0
+            });
         }
+        
+        // Create matrix rain
+        for (let i = 0; i < 50; i++) {
+            matrixChars.push({
+                x: Math.random() * confettiCanvas.width,
+                y: -20,
+                char: String.fromCharCode(0x30A0 + Math.random() * 96),
+                speed: Math.random() * 3 + 2,
+                alpha: Math.random() * 0.8 + 0.2
+            });
+        }
+        
         let frame = 0;
         function draw() {
             ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            confetti.forEach(c => { c.x += Math.cos(c.angle) * c.speed; c.y += Math.sin(c.angle) * c.speed + frame * 0.05; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r, c.r * 0.6, 0, 0, 2 * Math.PI); ctx.fillStyle = c.color; ctx.fill(); });
+            
+            // Draw matrix rain
+            ctx.fillStyle = '#00ff41';
+            ctx.font = '14px monospace';
+            matrixChars.forEach(char => {
+                ctx.globalAlpha = char.alpha;
+                ctx.fillText(char.char, char.x, char.y);
+                char.y += char.speed;
+                if (char.y > confettiCanvas.height) {
+                    char.y = -20;
+                    char.x = Math.random() * confettiCanvas.width;
+                }
+            });
+            
+            // Draw shield formation
+            ctx.globalAlpha = 1;
+            shieldParticles.forEach(particle => {
+                particle.x += (particle.targetX - particle.x) * 0.1;
+                particle.y += (particle.targetY - particle.y) * 0.1;
+                particle.alpha = Math.min(particle.alpha + 0.02, 0.8);
+                
+                ctx.globalAlpha = particle.alpha;
+                ctx.fillStyle = '#00ff41';
+                ctx.shadowColor = '#00ff41';
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+            
             frame++;
-            if (frame < 70) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 120) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
 
-    function junkBurst() {
-        const colors = ['#a9a9a9', '#808080', '#696969', '#778899', '#2f4f4f'];
-        const junk = [];
-        for (let i = 0; i < 50; i++) {
-            junk.push({ x: confettiCanvas.width / 2, y: confettiCanvas.height / 2 - 80, w: Math.random() * 8 + 5, h: Math.random() * 8 + 5, color: colors[Math.floor(Math.random() * colors.length)], angle: Math.random() * 2 * Math.PI, speed: Math.random() * 4 + 3, rotation: Math.random() * 2 * Math.PI });
+    function redAlertGlitch() {
+        const centerX = confettiCanvas.width / 2;
+        const centerY = confettiCanvas.height / 2;
+        const firewallBlocks = [];
+        const glitchLines = [];
+        
+        // Create firewall blocks
+        for (let i = 0; i < 12; i++) {
+            firewallBlocks.push({
+                x: centerX - 150 + (i * 25),
+                y: centerY + 100,
+                targetY: centerY - 50 - (Math.random() * 100),
+                width: 20,
+                height: Math.random() * 60 + 40,
+                alpha: 0,
+                delay: i * 5
+            });
         }
+        
+        // Create glitch scan lines
+        for (let i = 0; i < 8; i++) {
+            glitchLines.push({
+                y: Math.random() * confettiCanvas.height,
+                width: confettiCanvas.width,
+                height: Math.random() * 4 + 2,
+                alpha: Math.random() * 0.8 + 0.2,
+                speed: Math.random() * 10 + 5
+            });
+        }
+        
         let frame = 0;
         function draw() {
             ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            junk.forEach(j => { j.x += Math.cos(j.angle) * j.speed; j.y += Math.sin(j.angle) * j.speed + frame * 0.08; j.rotation += 0.1; ctx.save(); ctx.translate(j.x, j.y); ctx.rotate(j.rotation); ctx.fillStyle = j.color; ctx.fillRect(-j.w / 2, -j.h / 2, j.w, j.h); ctx.restore(); });
+            
+            // Screen glitch effect
+            if (frame < 30 && frame % 3 === 0) {
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            }
+            
+            // Draw glitch scan lines
+            glitchLines.forEach(line => {
+                ctx.globalAlpha = line.alpha;
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(0, line.y, line.width, line.height);
+                line.y += line.speed;
+                if (line.y > confettiCanvas.height) {
+                    line.y = -line.height;
+                    line.alpha = Math.random() * 0.8 + 0.2;
+                }
+            });
+            
+            // Draw firewall blocks
+            ctx.globalAlpha = 1;
+            firewallBlocks.forEach(block => {
+                if (frame > block.delay) {
+                    block.y += (block.targetY - block.y) * 0.15;
+                    block.alpha = Math.min(block.alpha + 0.05, 0.9);
+                    
+                    ctx.globalAlpha = block.alpha;
+                    ctx.fillStyle = '#ff3333';
+                    ctx.shadowColor = '#ff0000';
+                    ctx.shadowBlur = 15;
+                    ctx.fillRect(block.x, block.y, block.width, block.height);
+                    
+                    // Add warning triangles
+                    ctx.fillStyle = '#ffff00';
+                    ctx.shadowColor = '#ffff00';
+                    ctx.shadowBlur = 8;
+                    const triSize = 8;
+                    ctx.beginPath();
+                    ctx.moveTo(block.x + block.width/2, block.y - triSize);
+                    ctx.lineTo(block.x + block.width/2 - triSize, block.y + triSize);
+                    ctx.lineTo(block.x + block.width/2 + triSize, block.y + triSize);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.shadowBlur = 0;
+                }
+            });
+            
             frame++;
-            if (frame < 80) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 100) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
@@ -52,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function triggerSpamAnimation() {
         mascot.style.animation = 'mascot-shake 0.5s linear';
         mascotMouth.setAttribute('d', frownMouthPath);
-        junkBurst();
+        redAlertGlitch();
         setTimeout(() => {
             mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
             mascotMouth.setAttribute('d', originalMouthPath);
@@ -60,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function triggerNotSpamAnimation() {
-        confettiBurst();
+        digitalShieldAnimation();
         const leftEye = mascot.querySelector('ellipse[cx="27"]');
         const rightEye = mascot.querySelector('ellipse[cx="53"]');
         if (leftEye && rightEye) {
@@ -70,25 +198,64 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Reset button functionality
+    resetBtn.addEventListener('click', function() {
+        messageInput.value = '';
+        resultDiv.className = 'result';
+        resultContent.textContent = '';
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
+        // Reset mascot to normal state
+        mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
+        mascotMouth.setAttribute('d', originalMouthPath);
+        
+        // Focus back to textarea
+        messageInput.focus();
+    });
+
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        resultDiv.textContent = 'Checking...';
-        resultDiv.className = 'result';
+        
+        // Show loading state
+        resultContent.textContent = '🔍 Analyzing message...';
+        resultDiv.className = 'result show';
+        
         try {
-            const response = await fetch('/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: messageInput.value }) });
+            const response = await fetch('/predict', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ message: messageInput.value }) 
+            });
             const data = await response.json();
-            if (data.prediction === 'Spam') {
-                resultDiv.textContent = `🚫 Spam (Confidence: ${(data.probability * 100).toFixed(1)}%)`;
-                resultDiv.classList.add('spam');
-                triggerSpamAnimation();
-            } else {
-                resultDiv.textContent = `✅ Not Spam (Confidence: ${(data.probability * 100).toFixed(1)}%)`;
-                resultDiv.classList.add('not-spam');
-                triggerNotSpamAnimation();
-            }
+            
+            // Add slight delay for better UX
+            setTimeout(() => {
+                if (data.prediction === 'Spam') {
+                    resultContent.innerHTML = `
+                        <div style="font-size: 2rem; margin-bottom: 8px;">🚨</div>
+                        <div style="font-size: 1.4rem; font-weight: 700; margin-bottom: 4px;">THREAT DETECTED</div>
+                        <div style="font-size: 1rem; opacity: 0.9;">Confidence: ${(data.probability * 100).toFixed(1)}%</div>
+                    `;
+                    resultDiv.className = 'result show spam';
+                    triggerSpamAnimation();
+                } else {
+                    resultContent.innerHTML = `
+                        <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
+                        <div style="font-size: 1.4rem; font-weight: 700; margin-bottom: 4px;">MESSAGE SECURE</div>
+                        <div style="font-size: 1rem; opacity: 0.9;">Confidence: ${(data.probability * 100).toFixed(1)}%</div>
+                    `;
+                    resultDiv.className = 'result show not-spam';
+                    triggerNotSpamAnimation();
+                }
+            }, 800);
+            
         } catch (err) {
-            resultDiv.textContent = 'Error: Could not classify message.';
-            resultDiv.className = 'result';
+            resultContent.innerHTML = `
+                <div style="font-size: 2rem; margin-bottom: 8px;">⚠️</div>
+                <div style="font-size: 1.2rem; font-weight: 600;">Analysis Failed</div>
+                <div style="font-size: 0.9rem; opacity: 0.8;">Please try again</div>
+            `;
+            resultDiv.className = 'result show';
         }
     });
 });
