@@ -196,7 +196,7 @@ textarea:focus {
     display: none;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+    background: linear-gradient(135deg, #6c757d 0%, #8e9297 100%);
     color: #ffffff;
     border-radius: 0 8px 8px 0;
 }
@@ -206,7 +206,7 @@ textarea:focus {
 }
 
 .btn-reset:hover {
-    background: linear-gradient(135deg, #ff5252 0%, #ff7979 100%);
+    background: linear-gradient(135deg, #5a6268 0%, #7a8085 100%);
     transform: scale(1.02);
 }
 
