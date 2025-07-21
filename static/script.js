@@ -231,6 +231,14 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         e.stopPropagation();
         
+        // Disable analyze button
+        btnAnalyze.disabled = true;
+        btnAnalyze.style.opacity = '0.6';
+        btnAnalyze.style.cursor = 'not-allowed';
+        
+        // Clear previous results and animations
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
         // Show loading state
         resultContent.textContent = '🔍 Analyzing message...';
         resultDiv.className = 'result show';
@@ -286,6 +294,11 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Reset button state
         mainBtn.classList.remove('has-reset');
+        
+        // Re-enable analyze button
+        btnAnalyze.disabled = false;
+        btnAnalyze.style.opacity = '1';
+        btnAnalyze.style.cursor = 'pointer';
         
         // Reset mascot
         mascotMouth.setAttribute('d', originalMouthPath);
