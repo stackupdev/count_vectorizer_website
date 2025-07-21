@@ -217,9 +217,18 @@ document.addEventListener('DOMContentLoaded', function () {
         btnAnalyze.style.pointerEvents = 'auto';
         console.log('Reset completed - analyze button re-enabled');
         
-        // Reset mascot
+        // Reset mascot completely
         mascotMouth.setAttribute('d', originalMouthPath);
         mascot.style.transform = '';
+        mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite'; // Reset to default animation
+        
+        // Reset mascot eyes to original state
+        const leftEye = mascot.querySelector('ellipse[cx="27"]');
+        const rightEye = mascot.querySelector('ellipse[cx="53"]');
+        if (leftEye && rightEye) {
+            leftEye.setAttribute('ry', '4');
+            rightEye.setAttribute('ry', '4');
+        }
         
         // Clear canvas
         ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
