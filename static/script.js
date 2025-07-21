@@ -98,21 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function redAlertGlitch() {
         const centerX = confettiCanvas.width / 2;
         const centerY = confettiCanvas.height / 2;
-        const firewallBlocks = [];
         const glitchLines = [];
-        
-        // Create firewall blocks
-        for (let i = 0; i < 12; i++) {
-            firewallBlocks.push({
-                x: centerX - 150 + (i * 25),
-                y: centerY + 100,
-                targetY: centerY - 50 - (Math.random() * 100),
-                width: 20,
-                height: Math.random() * 60 + 40,
-                alpha: 0,
-                delay: i * 5
-            });
-        }
         
         // Create glitch scan lines
         for (let i = 0; i < 8; i++) {
@@ -144,35 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (line.y > confettiCanvas.height) {
                     line.y = -line.height;
                     line.alpha = Math.random() * 0.8 + 0.2;
-                }
-            });
-            
-            // Draw firewall blocks
-            ctx.globalAlpha = 1;
-            firewallBlocks.forEach(block => {
-                if (frame > block.delay) {
-                    block.y += (block.targetY - block.y) * 0.15;
-                    block.alpha = Math.min(block.alpha + 0.05, 0.9);
-                    
-                    ctx.globalAlpha = block.alpha;
-                    ctx.fillStyle = '#ff3333';
-                    ctx.shadowColor = '#ff0000';
-                    ctx.shadowBlur = 15;
-                    ctx.fillRect(block.x, block.y, block.width, block.height);
-                    
-                    // Add warning triangles
-                    ctx.fillStyle = '#ffff00';
-                    ctx.shadowColor = '#ffff00';
-                    ctx.shadowBlur = 8;
-                    const triSize = 8;
-                    ctx.beginPath();
-                    ctx.moveTo(block.x + block.width/2, block.y - triSize);
-                    ctx.lineTo(block.x + block.width/2 - triSize, block.y + triSize);
-                    ctx.lineTo(block.x + block.width/2 + triSize, block.y + triSize);
-                    ctx.closePath();
-                    ctx.fill();
-                    
-                    ctx.shadowBlur = 0;
                 }
             });
             
