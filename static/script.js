@@ -152,11 +152,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 800);
         }
         
-        // Reset mascot after animation
+        // Reset mascot after animation (sync with matrix duration)
         setTimeout(() => {
             mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
             mascotMouth.setAttribute('d', originalMouthPath);
-        }, 1000);
+        }, 4000);
     }
 
     // Reset functionality
