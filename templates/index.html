@@ -26,16 +26,15 @@
         <h1>CyberGuard AI</h1>
         <form id="spam-form">
             <textarea id="message" name="message" placeholder="Enter suspicious message for AI analysis..." required></textarea>
-            <div class="button-group">
-                <button type="submit" class="analyze-btn">
+            <button type="submit" id="main-btn" class="main-btn">
+                <span class="btn-left">
                     <span class="btn-icon">🛡️</span>
                     <span class="btn-text">Analyze Message</span>
-                </button>
-                <button type="button" id="reset-btn" class="reset-btn">
-                    <span class="btn-icon">🔄</span>
-                    <span class="btn-text">Reset</span>
-                </button>
-            </div>
+                </span>
+                <span class="btn-reset" id="btn-reset">
+                    <span class="reset-icon">🔄</span>
+                </span>
+            </button>
         </form>
         <div id="result" class="result">
             <div class="result-content"></div>

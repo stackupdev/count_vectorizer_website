@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const messageInput = document.getElementById('message');
     const resultDiv = document.getElementById('result');
     const resultContent = document.querySelector('.result-content');
-    const resetBtn = document.getElementById('reset-btn');
+    const mainBtn = document.getElementById('main-btn');
+    const btnReset = document.getElementById('btn-reset');
     const mascot = document.getElementById('mascot');
     const mascotMouth = document.getElementById('mascot-mouth');
     const confettiCanvas = document.getElementById('confetti-canvas');
@@ -198,12 +199,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Reset button functionality
-    resetBtn.addEventListener('click', function() {
+    // Reset functionality
+    function resetAll() {
         messageInput.value = '';
         resultDiv.className = 'result';
         resultContent.textContent = '';
         ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        
+        // Hide reset button
+        btnReset.classList.remove('show');
         
         // Reset mascot to normal state
         mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
@@ -211,6 +215,13 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Focus back to textarea
         messageInput.focus();
+    }
+    
+    // Reset button click handler
+    btnReset.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        resetAll();
     });
 
     form.addEventListener('submit', async function (e) {
@@ -247,6 +258,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     resultDiv.className = 'result show not-spam';
                     triggerNotSpamAnimation();
                 }
+                
+                // Show reset button after analysis
+                btnReset.classList.add('show');
             }, 800);
             
         } catch (err) {

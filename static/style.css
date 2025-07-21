@@ -109,8 +109,10 @@ form {
 }
 
 textarea {
-    resize: vertical;
+    resize: none;
     min-height: 120px;
+    max-height: 200px;
+    overflow-y: auto;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(123, 97, 255, 0.3);
     border-radius: 16px;
@@ -121,6 +123,25 @@ textarea {
     outline: none;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(123, 97, 255, 0.5) transparent;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: rgba(123, 97, 255, 0.5);
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(123, 97, 255, 0.7);
 }
 
 textarea::placeholder {
@@ -133,14 +154,8 @@ textarea:focus {
     background: rgba(255, 255, 255, 0.12);
 }
 
-.button-group {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-}
-
-.analyze-btn, .reset-btn {
-    flex: 1;
+.main-btn {
+    width: 100%;
     border: none;
     border-radius: 16px;
     padding: 18px 24px;
@@ -152,24 +167,44 @@ textarea:focus {
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.analyze-btn {
+    justify-content: space-between;
     background: linear-gradient(135deg, #7b61ff 0%, #4f8cff 100%);
     color: #ffffff;
     box-shadow: 0 4px 20px rgba(123, 97, 255, 0.4), 0 0 0 1px rgba(123, 97, 255, 0.3);
 }
 
-.reset-btn {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+.btn-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
 }
 
-.analyze-btn::before, .reset-btn::before {
+.btn-reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-reset.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.btn-reset:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+.main-btn::before {
     content: '';
     position: absolute;
     top: 0;
@@ -180,24 +215,16 @@ textarea:focus {
     transition: left 0.5s;
 }
 
-.analyze-btn:hover::before, .reset-btn:hover::before {
+.main-btn:hover::before {
     left: 100%;
 }
 
-.analyze-btn:hover {
+.main-btn:hover {
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 8px 30px rgba(123, 97, 255, 0.6), 0 0 0 1px rgba(123, 97, 255, 0.5);
 }
 
-.reset-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: #ffffff;
-    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
-}
-
-.analyze-btn:active, .reset-btn:active {
+.main-btn:active {
     transform: translateY(0) scale(0.98);
 }
 
@@ -207,6 +234,10 @@ textarea:focus {
 
 .btn-text {
     font-weight: 600;
+}
+
+.reset-icon {
+    font-size: 1.1rem;
 }
 
 .result {
