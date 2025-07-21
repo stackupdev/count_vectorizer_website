@@ -24,22 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function digitalShieldAnimation() {
         const centerX = confettiCanvas.width / 2;
         const centerY = confettiCanvas.height / 2 - 50;
-        const shieldParticles = [];
         const matrixChars = [];
-        
-        // Create shield particles
-        for (let i = 0; i < 60; i++) {
-            const angle = (i / 60) * Math.PI * 2;
-            const radius = 80 + Math.random() * 40;
-            shieldParticles.push({
-                x: centerX + Math.cos(angle) * radius,
-                y: centerY + Math.sin(angle) * radius,
-                targetX: centerX + Math.cos(angle) * 60,
-                targetY: centerY + Math.sin(angle) * 60,
-                size: Math.random() * 4 + 2,
-                alpha: 0
-            });
-        }
         
         // Create matrix rain (make it more prominent)
         for (let i = 0; i < 120; i++) {
@@ -72,25 +57,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
             
-            // Draw shield formation
-            ctx.globalAlpha = 1;
-            shieldParticles.forEach(particle => {
-                particle.x += (particle.targetX - particle.x) * 0.1;
-                particle.y += (particle.targetY - particle.y) * 0.1;
-                particle.alpha = Math.min(particle.alpha + 0.02, 0.8);
-                
-                ctx.globalAlpha = particle.alpha;
-                ctx.fillStyle = '#00ff41';
-                ctx.shadowColor = '#00ff41';
-                ctx.shadowBlur = 10;
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            });
+
             
             frame++;
-            if (frame < 180) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 240) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
@@ -156,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (leftEye && rightEye) {
             leftEye.setAttribute('ry', '1.2');
             rightEye.setAttribute('ry', '1.2');
-            setTimeout(() => { leftEye.setAttribute('ry', '4'); rightEye.setAttribute('ry', '4'); }, 180);
+            setTimeout(() => { leftEye.setAttribute('ry', '4'); rightEye.setAttribute('ry', '4'); }, 240);
         }
     }
 
