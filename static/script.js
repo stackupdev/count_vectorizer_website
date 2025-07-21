@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const happyMouthPath = 'M30 46 Q40 53 50 46';
         mascotMouth.setAttribute('d', happyMouthPath);
         
-        // Add celebratory bounce animation
-        mascot.style.animation = 'mascot-celebrate 0.8s ease-in-out';
+        // Add celebratory bounce animation (repeat for full duration)
+        mascot.style.animation = 'mascot-celebrate 1.2s ease-in-out infinite';
         
         // Blink eyes happily (wink effect)
         const leftEye = mascot.querySelector('ellipse[cx="27"]');
