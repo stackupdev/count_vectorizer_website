@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             
             frame++;
-            if (frame < 240) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 140) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (leftEye && rightEye) {
             leftEye.setAttribute('ry', '1.2');
             rightEye.setAttribute('ry', '1.2');
-            setTimeout(() => { leftEye.setAttribute('ry', '4'); rightEye.setAttribute('ry', '4'); }, 240);
+            setTimeout(() => { leftEye.setAttribute('ry', '4'); rightEye.setAttribute('ry', '4'); }, 140);
         }
     }
 
