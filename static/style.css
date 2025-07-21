@@ -14,7 +14,50 @@ body {
     box-shadow: 0 4px 32px rgba(80, 80, 180, 0.10), 0 1.5px 6px rgba(80, 80, 180, 0.06);
     padding: 36px 32px 32px 32px;
     text-align: center;
+    position: relative;
 }
+
+.mascot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 90px;
+}
+
+#mascot {
+    animation: mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite;
+    transform-origin: 50% 80%;
+    filter: drop-shadow(0 2px 8px #e8e0ff);
+}
+
+@keyframes mascot-bounce {
+    0%, 100% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+    }
+    10% {
+        transform: translateY(-6px) scaleY(1.08) scaleX(0.96);
+    }
+    20% {
+        transform: translateY(-16px) scaleY(0.92) scaleX(1.07);
+    }
+    30% {
+        transform: translateY(-22px) scaleY(0.88) scaleX(1.12);
+    }
+    50% {
+        transform: translateY(0) scaleY(1.02) scaleX(0.98);
+    }
+    60% {
+        transform: translateY(-9px) scaleY(1.07) scaleX(0.95);
+    }
+    70% {
+        transform: translateY(-4px) scaleY(0.97) scaleX(1.04);
+    }
+    80% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+    }
+}
+
 
 h1 {
     font-weight: 700;

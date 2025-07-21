@@ -9,6 +9,19 @@
 </head>
 <body>
     <div class="container">
+        <div class="mascot-container">
+            <!-- Cute animated mail mascot SVG -->
+            <svg id="mascot" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <rect x="10" y="20" width="60" height="40" rx="12" fill="#fffbe7" stroke="#7b61ff" stroke-width="3"/>
+                    <polyline points="10,20 40,50 70,20" fill="#f6e6ff" stroke="#7b61ff" stroke-width="2"/>
+                    <ellipse cx="27" cy="38" rx="3" ry="4" fill="#7b61ff"/>
+                    <ellipse cx="53" cy="38" rx="3" ry="4" fill="#7b61ff"/>
+                    <path d="M30 48 Q40 55 50 48" stroke="#7b61ff" stroke-width="2" fill="none"/>
+                </g>
+            </svg>
+        </div>
+        <canvas id="confetti-canvas" style="position:absolute;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:10;" width="800" height="600"></canvas>
         <h1>Spam Message Classifier</h1>
         <form id="spam-form">
             <textarea id="message" name="message" placeholder="Paste your message here..." required></textarea>
