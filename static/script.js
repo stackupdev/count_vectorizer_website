@@ -305,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // Show reset button after analysis
                 mainBtn.classList.add('has-reset');
+                console.log('Analysis complete - only reset button is active');
             }, 800);
             
         } catch (err) {
@@ -314,6 +315,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div style="font-size: 0.9rem; opacity: 0.8;">Please try again</div>
             `;
             resultDiv.className = 'result show';
+            
+            // Re-enable analyze button on error so user can try again
+            btnAnalyze.disabled = false;
+            btnAnalyze.style.opacity = '1';
+            btnAnalyze.style.cursor = 'pointer';
+            btnAnalyze.style.pointerEvents = 'auto';
+            console.log('Analysis failed - analyze button re-enabled for retry');
         }
     });
 
