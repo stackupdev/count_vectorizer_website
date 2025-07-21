@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             
             frame++;
-            if (frame < 140) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 240) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
@@ -121,13 +121,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function triggerNotSpamAnimation() {
         digitalShieldAnimation();
+        
+        // Make mascot smile and celebrate
+        const happyMouthPath = 'M30 46 Q40 53 50 46';
+        mascotMouth.setAttribute('d', happyMouthPath);
+        
+        // Add celebratory bounce animation
+        mascot.style.animation = 'mascot-celebrate 0.8s ease-in-out';
+        
+        // Blink eyes happily (wink effect)
         const leftEye = mascot.querySelector('ellipse[cx="27"]');
         const rightEye = mascot.querySelector('ellipse[cx="53"]');
         if (leftEye && rightEye) {
+            // Happy blink sequence
             leftEye.setAttribute('ry', '1.2');
             rightEye.setAttribute('ry', '1.2');
-            setTimeout(() => { leftEye.setAttribute('ry', '4'); rightEye.setAttribute('ry', '4'); }, 140);
+            setTimeout(() => {
+                leftEye.setAttribute('ry', '4');
+                rightEye.setAttribute('ry', '4');
+            }, 200);
+            
+            // Second happy blink
+            setTimeout(() => {
+                leftEye.setAttribute('ry', '1.2');
+                rightEye.setAttribute('ry', '1.2');
+            }, 600);
+            setTimeout(() => {
+                leftEye.setAttribute('ry', '4');
+                rightEye.setAttribute('ry', '4');
+            }, 800);
         }
+        
+        // Reset mascot after animation
+        setTimeout(() => {
+            mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
+            mascotMouth.setAttribute('d', originalMouthPath);
+        }, 1000);
     }
 
     // Reset functionality
