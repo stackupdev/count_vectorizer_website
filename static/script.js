@@ -324,11 +324,4 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Analysis failed - analyze button re-enabled for retry');
         }
     });
-
-    // Reset button functionality - use the consolidated resetAll function
-    btnReset.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        resetAll();
-    });
 });
