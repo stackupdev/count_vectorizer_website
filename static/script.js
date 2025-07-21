@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             
             frame++;
-            if (frame < 240) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            if (frame < 180) requestAnimationFrame(draw); else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
         }
         draw();
     }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => {
             mascot.style.animation = 'mascot-bounce 1.4s cubic-bezier(.54,.01,.5,1.6) infinite';
             mascotMouth.setAttribute('d', originalMouthPath);
-        }, 4000);
+        }, 3000);
     }
 
     // Reset functionality
