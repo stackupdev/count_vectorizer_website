@@ -248,6 +248,20 @@ document.addEventListener('DOMContentLoaded', function () {
         
         console.log('Analyze button clicked - starting analysis');
         
+        // Validate message is not empty
+        const message = messageInput.value.trim();
+        if (!message) {
+            // Show error for empty message
+            resultContent.innerHTML = `
+                <div style="font-size: 2rem; margin-bottom: 8px;">⚠️</div>
+                <div style="font-size: 1.2rem; font-weight: 600; color: #ff6b6b;">Please enter a message</div>
+                <div style="font-size: 0.9rem; opacity: 0.8;">Enter some text to analyze for spam</div>
+            `;
+            resultDiv.className = 'result show';
+            messageInput.focus();
+            return;
+        }
+        
         // Disable analyze button immediately
         btnAnalyze.disabled = true;
         btnAnalyze.style.opacity = '0.6';
@@ -265,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch('/predict', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ message: messageInput.value }) 
+                body: JSON.stringify({ message: message }) 
             });
             const data = await response.json();
             
